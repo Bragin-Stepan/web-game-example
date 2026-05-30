@@ -1,0 +1,36 @@
+- generic [ref=e3]:
+  - button "Открыть настройки" [active] [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - generic [ref=e10]:
+    - generic [ref=e13]: "0"
+    - generic [ref=e16]: "0"
+  - generic [ref=e18]:
+    - generic [ref=e23]: 5/5
+    - generic [ref=e27]: "0"
+  - generic [ref=e32]:
+    - generic [ref=e33]:
+      - heading "Настройки" [level=2] [ref=e34]
+      - button "Закрыть" [ref=e35]: ×
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]: Музыка
+          - generic [ref=e40]: 25%
+        - slider "Музыка 25%" [ref=e41] [cursor=pointer]: "25"
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: Звуки
+          - generic [ref=e45]: 40%
+        - slider "Звуки 40%" [ref=e46] [cursor=pointer]: "40"
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: Язык
+          - generic [ref=e50]: Русский
+        - generic [ref=e51]:
+          - button "Предыдущий язык" [ref=e52]:
+            - img [ref=e53]
+          - generic [ref=e55]: RU
+          - button "Следующий язык" [ref=e56]:
+            - img [ref=e57]
+  - button "Навыки" [ref=e29]:
+    - generic [ref=e30]: Навыки

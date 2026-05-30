@@ -1,0 +1,35 @@
+- main [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: Energy
+        - strong [ref=e9]: "34"
+      - generic [ref=e10]:
+        - generic [ref=e11]: Rate
+        - strong [ref=e12]: 0.5/s
+    - button "Skills" [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: Skills
+    - button "Settings" [active] [ref=e15] [cursor=pointer]: "*"
+  - generic [ref=e72]:
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - heading "Settings" [level=2] [ref=e75]
+        - paragraph [ref=e76]: Template controls
+      - button "Close" [ref=e77] [cursor=pointer]: x
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - strong [ref=e82]: Simulation
+          - generic [ref=e83]: Pause the fixed-step game loop.
+        - button "Pause" [ref=e84] [cursor=pointer]:
+          - generic [ref=e85]: Pause
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - strong [ref=e88]: Music
+          - emphasis [ref=e89]: 25%
+        - slider "Music 25%" [ref=e90] [cursor=pointer]: "25"
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - strong [ref=e93]: Sounds
+          - emphasis [ref=e94]: 40%
+        - slider "Sounds 40%" [ref=e95] [cursor=pointer]: "40"

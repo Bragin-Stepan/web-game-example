@@ -1,0 +1,9 @@
+- main [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]: Energy
+      - strong [ref=e8]: "25"
+    - generic [ref=e9]:
+      - generic [ref=e10]: Rate
+      - strong [ref=e11]: 0.5/s
+    - button "Skills" [ref=e12] [cursor=pointer]

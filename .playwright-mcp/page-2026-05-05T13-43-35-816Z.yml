@@ -1,0 +1,23 @@
+- generic [ref=e3]:
+  - generic [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e11]: Core Inc
+      - generic [ref=e12]: Подготовка лагеря
+    - generic [ref=e16]: Загрузка сцены
+  - button "Открыть настройки" [ref=e17] [cursor=pointer]:
+    - img [ref=e18]
+  - generic [ref=e21]:
+    - generic [ref=e24]: "0"
+    - generic [ref=e27]: "0"
+    - generic [ref=e32]: 5/5
+  - generic [ref=e34]:
+    - heading "⛏️ Действия" [level=2] [ref=e35]:
+      - generic [ref=e36]: ⛏️
+      - text: Действия
+    - button "+ Юнит XP 20 1/5 лимит" [ref=e38] [cursor=pointer]:
+      - generic [ref=e39]:
+        - generic [ref=e40]: + Юнит
+        - generic [ref=e41]: XP 20
+      - generic [ref=e42]: 1/5 лимит
+  - button "Навыки" [ref=e44] [cursor=pointer]:
+    - generic [ref=e45]: Навыки

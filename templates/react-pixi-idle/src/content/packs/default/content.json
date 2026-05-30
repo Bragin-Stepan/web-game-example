@@ -1,0 +1,129 @@
+{
+  "id": "default",
+  "title": "Default Template Pack",
+  "resources": [
+    {
+      "id": "energy",
+      "title": "Energy"
+    }
+  ],
+  "progressionNodes": [
+    {
+      "id": "node_core",
+      "title": "Core engine",
+      "description": "Starts passive energy production.",
+      "cost": {
+        "energy": 10
+      },
+      "rewards": {
+        "productionPerSecond": 1
+      },
+      "position": { "x": 0, "y": 0 },
+      "parentIds": []
+    },
+    {
+      "id": "node_range",
+      "title": "Route planning",
+      "description": "A low-cost branch for steady passive income.",
+      "cost": {
+        "energy": 35
+      },
+      "rewards": {
+        "productionPerSecond": 2
+      },
+      "position": { "x": 2, "y": -1 },
+      "parentIds": ["node_core"]
+    },
+    {
+      "id": "node_storage",
+      "title": "Energy storage",
+      "description": "A utility-style upgrade with a modest income reward.",
+      "cost": {
+        "energy": 55
+      },
+      "rewards": {
+        "productionPerSecond": 1.5
+      },
+      "position": { "x": 2, "y": 0 },
+      "parentIds": ["node_core"]
+    },
+    {
+      "id": "node_agents",
+      "title": "Helper units",
+      "description": "An expensive branch with stronger scaling.",
+      "cost": {
+        "energy": 70
+      },
+      "rewards": {
+        "productionPerSecond": 4
+      },
+      "position": { "x": 2, "y": 1 },
+      "parentIds": ["node_core"]
+    },
+    {
+      "id": "node_routes_2",
+      "title": "Express routes",
+      "description": "Continues the steady route branch.",
+      "cost": {
+        "energy": 120
+      },
+      "rewards": {
+        "productionPerSecond": 5
+      },
+      "position": { "x": 4, "y": -1.5 },
+      "parentIds": ["node_range"]
+    },
+    {
+      "id": "node_storage_2",
+      "title": "Capacitor bank",
+      "description": "Shows a middle branch that can merge later.",
+      "cost": {
+        "energy": 135
+      },
+      "rewards": {
+        "productionPerSecond": 4
+      },
+      "position": { "x": 4, "y": 0 },
+      "parentIds": ["node_storage"]
+    },
+    {
+      "id": "node_agents_2",
+      "title": "Autonomous crews",
+      "description": "Continues the expensive automation branch.",
+      "cost": {
+        "energy": 160
+      },
+      "rewards": {
+        "productionPerSecond": 7
+      },
+      "position": { "x": 4, "y": 1.5 },
+      "parentIds": ["node_agents"]
+    },
+    {
+      "id": "node_scale",
+      "title": "Scale up",
+      "description": "A merged upgrade that requires two different paths.",
+      "cost": {
+        "energy": 280
+      },
+      "rewards": {
+        "productionPerSecond": 12
+      },
+      "position": { "x": 6, "y": 0 },
+      "parentIds": ["node_routes_2", "node_storage_2"]
+    },
+    {
+      "id": "node_overdrive",
+      "title": "Overdrive",
+      "description": "A late-game capstone that needs the automation branch too.",
+      "cost": {
+        "energy": 520
+      },
+      "rewards": {
+        "productionPerSecond": 24
+      },
+      "position": { "x": 8, "y": 0.75 },
+      "parentIds": ["node_scale", "node_agents_2"]
+    }
+  ]
+}

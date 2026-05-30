@@ -1,0 +1,56 @@
+- main [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: Energy
+        - strong [ref=e9]: "27"
+      - generic [ref=e10]:
+        - generic [ref=e11]: Rate
+        - strong [ref=e12]: 0.5/s
+    - button "Skills" [active] [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: Skills
+    - button "Settings" [ref=e15] [cursor=pointer]: "*"
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Progression" [level=2] [ref=e21]
+        - paragraph [ref=e22]: 27 energy available
+      - button "Close" [ref=e23] [cursor=pointer]: x
+    - generic [ref=e26]:
+      - img [ref=e27]
+      - button "Core engine Starts passive energy production. 10 energy" [ref=e35] [cursor=pointer]:
+        - strong [ref=e36]: Core engine
+        - generic [ref=e37]: Starts passive energy production.
+        - generic [ref=e38]: 10 energy
+      - 'button "Route planning A low-cost branch for steady passive income. Locked: 35 energy" [ref=e39]':
+        - strong [ref=e40]: Route planning
+        - generic [ref=e41]: A low-cost branch for steady passive income.
+        - generic [ref=e42]: "Locked: 35 energy"
+      - 'button "Energy storage A utility-style upgrade with a modest income reward. Locked: 55 energy" [ref=e43]':
+        - strong [ref=e44]: Energy storage
+        - generic [ref=e45]: A utility-style upgrade with a modest income reward.
+        - generic [ref=e46]: "Locked: 55 energy"
+      - 'button "Helper units An expensive branch with stronger scaling. Locked: 70 energy" [ref=e47]':
+        - strong [ref=e48]: Helper units
+        - generic [ref=e49]: An expensive branch with stronger scaling.
+        - generic [ref=e50]: "Locked: 70 energy"
+      - 'button "Express routes Continues the steady route branch. Locked: 120 energy" [ref=e51]':
+        - strong [ref=e52]: Express routes
+        - generic [ref=e53]: Continues the steady route branch.
+        - generic [ref=e54]: "Locked: 120 energy"
+      - 'button "Capacitor bank Shows a middle branch that can merge later. Locked: 135 energy" [ref=e55]':
+        - strong [ref=e56]: Capacitor bank
+        - generic [ref=e57]: Shows a middle branch that can merge later.
+        - generic [ref=e58]: "Locked: 135 energy"
+      - 'button "Autonomous crews Continues the expensive automation branch. Locked: 160 energy" [ref=e59]':
+        - strong [ref=e60]: Autonomous crews
+        - generic [ref=e61]: Continues the expensive automation branch.
+        - generic [ref=e62]: "Locked: 160 energy"
+      - 'button "Scale up A merged upgrade that requires two different paths. Locked: 280 energy" [ref=e63]':
+        - strong [ref=e64]: Scale up
+        - generic [ref=e65]: A merged upgrade that requires two different paths.
+        - generic [ref=e66]: "Locked: 280 energy"
+      - 'button "Overdrive A late-game capstone that needs the automation branch too. Locked: 520 energy" [ref=e67]':
+        - strong [ref=e68]: Overdrive
+        - generic [ref=e69]: A late-game capstone that needs the automation branch too.
+        - generic [ref=e70]: "Locked: 520 energy"

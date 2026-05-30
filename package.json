@@ -1,0 +1,37 @@
+{
+  "name": "web-game-template-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "templates/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @core-inc/react-pixi-idle-template",
+    "create-game": "node scripts/create-game.mjs",
+    "dev:template": "npm run dev -w @core-inc/react-pixi-idle-template",
+    "build:packages": "npm run build -w @core-inc/yandex-game-kit && npm run build -w @core-inc/progression-tree",
+    "build:template": "npm run build -w @core-inc/react-pixi-idle-template",
+    "build": "npm run build:packages && npm run build:template",
+    "lint": "eslint .",
+    "validate:content": "npm run validate:content -w @core-inc/react-pixi-idle-template",
+    "audit:yandex": "npm run audit:yandex -w @core-inc/react-pixi-idle-template",
+    "typecheck:kit": "npm run typecheck -w @core-inc/yandex-game-kit && npm run typecheck -w @core-inc/progression-tree"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^10.4.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "tailwindcss": "^4.1.4",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.60.0",
+    "vite": "^5.4.14"
+  }
+}

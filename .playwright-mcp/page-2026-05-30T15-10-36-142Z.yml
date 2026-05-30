@@ -1,0 +1,24 @@
+- main [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: Energy
+        - strong [ref=e9]: "30"
+      - generic [ref=e10]:
+        - generic [ref=e11]: Rate
+        - strong [ref=e12]: 0.5/s
+    - button "Skills" [active] [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: Skills
+    - button "Settings" [ref=e15] [cursor=pointer]: "*"
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "Progression" [level=2] [ref=e21]
+        - paragraph [ref=e22]: 30 energy available
+      - button "Close" [ref=e23] [cursor=pointer]: x
+    - generic [ref=e25]:
+      - img [ref=e26]
+      - button "Core engine Starts passive energy production. 10 energy" [ref=e27] [cursor=pointer]:
+        - strong [ref=e28]: Core engine
+        - generic [ref=e29]: Starts passive energy production.
+        - generic [ref=e30]: 10 energy

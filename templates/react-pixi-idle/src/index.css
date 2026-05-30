@@ -1,0 +1,170 @@
+@import "./ui/styles/theme.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+}
+
+button {
+  font: inherit;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  touch-action: none;
+}
+
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  user-select: text;
+  touch-action: auto;
+}
+
+#game-root,
+.canvas-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.hud {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+}
+
+.pause-pill {
+  position: fixed;
+  top: 74px;
+  left: 16px;
+  z-index: 10;
+  display: grid;
+  min-height: 40px;
+  place-items: center;
+  padding: 0 14px;
+  color: var(--ui-warn);
+}
+
+.tree-surface {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(45, 212, 191, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 212, 191, 0.08) 1px, transparent 1px),
+    #0f172a;
+  background-size: 32px 32px;
+}
+
+.tree-transform {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.tree-node {
+  position: absolute;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-panel-2);
+  color: #cbd5e1;
+  text-align: left;
+  cursor: default;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.tree-node strong {
+  position: relative;
+  z-index: 1;
+  color: var(--ui-text);
+  font-size: 13px;
+}
+
+.tree-node span,
+.tree-node small {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.tree-node small {
+  color: var(--ui-warn);
+}
+
+.tree-node.can-buy {
+  border-color: rgba(56, 189, 248, 0.9);
+  background: #123143;
+  cursor: pointer;
+}
+
+.tree-node.is-owned {
+  border-color: rgba(34, 197, 94, 0.78);
+  background: #123324;
+}
+
+.tree-node.is-locked {
+  opacity: 0.58;
+  filter: saturate(0.72);
+}
+
+@media (max-width: 620px) {
+  .hud {
+    right: 12px;
+    left: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ui-resource-bar {
+    flex: 1 1 100%;
+  }
+
+  .ui-resource-chip {
+    min-width: 0;
+    flex: 1 1 110px;
+  }
+
+  .hud .ui-button {
+    flex: 1 1 auto;
+  }
+}

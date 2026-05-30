@@ -1,0 +1,11 @@
+- generic [ref=e3]:
+  - button "Открыть настройки" [ref=e11] [cursor=pointer]:
+    - img [ref=e12]
+  - generic [ref=e15]:
+    - generic [ref=e18]: "0"
+    - generic [ref=e21]: "0"
+  - generic [ref=e23]:
+    - generic [ref=e28]: 5/5
+    - generic [ref=e32]: "0"
+  - button "Навыки" [ref=e34]:
+    - img [ref=e35]

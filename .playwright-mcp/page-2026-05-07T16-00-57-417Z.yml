@@ -1,0 +1,39 @@
+- generic [ref=e3]:
+  - button "Открыть настройки" [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - generic [ref=e10]:
+    - generic [ref=e13]: "0"
+    - generic [ref=e16]: "0"
+  - generic [ref=e18]:
+    - generic [ref=e23]: 5/5
+    - generic [ref=e27]: "0"
+  - generic [ref=e60]:
+    - generic [ref=e61]:
+      - heading [level=2]
+      - button "Закрыть" [ref=e62]: ×
+    - generic [ref=e64]:
+      - button "-" [ref=e65]
+      - button "+" [ref=e66]
+      - button "⌂" [ref=e67]
+    - generic [ref=e68]:
+      - generic:
+        - img [ref=e69]
+        - generic [ref=e70]:
+          - button "0/2 1 Опыт" [ref=e71]:
+            - generic [ref=e73]: 0/2
+            - generic [ref=e75]:
+              - generic [ref=e76]: "1"
+              - img "Опыт" [ref=e77]
+          - generic:
+            - generic: Базовый доход
+            - generic: Каждый копатель получает +1 опыта
+            - generic:
+              - generic:
+                - img "Опыт" [ref=e78]
+                - text: "1"
+        - button "?" [ref=e80]:
+          - generic [ref=e81]: "?"
+        - button "?" [ref=e83]:
+          - generic [ref=e84]: "?"
+  - button "Навыки" [active] [ref=e29]:
+    - generic [ref=e30]: Навыки
