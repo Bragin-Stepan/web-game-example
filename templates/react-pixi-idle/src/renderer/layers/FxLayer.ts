@@ -1,19 +1,22 @@
-import { Container, Graphics } from 'pixi.js';
-import type { TemplateGameState } from '../../game/types';
+import { Graphics } from 'pixi.js';
 
 export class FxLayer {
-  readonly view = new Container();
+  readonly view = new Graphics();
 
-  private glow = new Graphics();
+  private width = 0;
+  private height = 0;
 
-  constructor() {
-    this.view.addChild(this.glow);
+  resize(width: number, height: number) {
+    if (width === this.width && height === this.height) return;
+
+    this.width = width;
+    this.height = height;
+    this.view.clear();
+    this.view.rect(0, 0, width, height);
+    this.view.fill({ color: 0x38bdf8, alpha: 1 });
   }
 
-  update(state: TemplateGameState, width: number, height: number) {
-    const alpha = 0.04 + Math.sin(state.time.totalMs / 900) * 0.015;
-    this.glow.clear();
-    this.glow.rect(0, 0, width, height);
-    this.glow.fill({ color: 0x38bdf8, alpha });
+  update(renderTimeMs: number) {
+    this.view.alpha = 0.04 + Math.sin(renderTimeMs / 900) * 0.015;
   }
 }

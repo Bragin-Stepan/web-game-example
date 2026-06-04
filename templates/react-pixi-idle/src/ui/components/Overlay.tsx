@@ -28,7 +28,7 @@ export function Overlay({
 }: OverlayProps) {
   return (
     <div
-      className="fixed inset-0 z-30 grid place-items-center bg-black/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-30 grid place-items-center bg-black/60 p-4"
       onClick={(event) => event.target === event.currentTarget && onClose()}
     >
       <section
@@ -52,7 +52,7 @@ export function Overlay({
             <FaTimes />
           </IconButton>
         </header>
-        <div className="flex min-h-0 flex-1 overflow-y-auto overscroll-contain bg-neutral-100">{children}</div>
+        <div className="flex min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain bg-neutral-100">{children}</div>
         {footer ? <footer className="flex items-center justify-between gap-4 border-t-2 border-neutral-300 bg-neutral-100 p-4">{footer}</footer> : null}
       </section>
     </div>

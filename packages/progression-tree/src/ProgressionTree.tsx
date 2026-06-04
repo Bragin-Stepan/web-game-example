@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ProgressionPurchaseBursts } from './ProgressionPurchaseBursts';
 import { ProgressionTreeLines } from './ProgressionTreeLines';
 import { ProgressionTreeSurface } from './ProgressionTreeSurface';
@@ -20,8 +21,9 @@ export function ProgressionTree<TNode extends ProgressionTreeNodeLike>({
   classNames,
   style,
 }: ProgressionTreeProps<TNode>) {
+  const nodeById = useMemo(() => new Map(nodes.map((node) => [node.id, node])), [nodes]);
   const resolvePosition = (nodeId: string) => {
-    const node = nodes.find((candidate) => candidate.id === nodeId);
+    const node = nodeById.get(nodeId);
     return getPosition(nodeId, node);
   };
 

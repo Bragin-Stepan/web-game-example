@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { ProgressionPoint, ProgressionTreeNodeLike } from './types';
 
 export type ProgressionTreeLinesProps<TNode extends ProgressionTreeNodeLike> = {
@@ -31,6 +32,8 @@ export function ProgressionTreeLines<TNode extends ProgressionTreeNodeLike>({
   className = 'pointer-events-none absolute z-0',
   lineClassName = 'transition-colors duration-300',
 }: ProgressionTreeLinesProps<TNode>) {
+  const nodeById = useMemo(() => new Map(nodes.map((node) => [node.id, node])), [nodes]);
+
   return (
     <svg className={className} style={{ overflow: 'visible', width: 1, height: 1 }}>
       {nodes.map((node) => {
@@ -39,7 +42,7 @@ export function ProgressionTreeLines<TNode extends ProgressionTreeNodeLike>({
         if (parentIds.length === 0) return null;
 
         return parentIds.map((parentId) => {
-          const parent = nodes.find((candidate) => candidate.id === parentId);
+          const parent = nodeById.get(parentId);
           if (!parent || !isNodeVisible(parent)) return null;
 
           const startPosition = getPosition(parent.id);

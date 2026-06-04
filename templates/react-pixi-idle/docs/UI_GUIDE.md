@@ -14,7 +14,6 @@ src/ui/lib/cn.ts
 - `IconButton`: square icon button with accessible label and tooltip.
 - `Tooltip`: small hover/focus tooltip used by icon controls.
 - `Overlay`: reusable popup/panel shell with a dark header and light body.
-- `ElasticSlider`: springy controlled slider for settings.
 - `ConfirmDialog`: confirmation popup.
 - `ResourceBar`: compact HUD resource chips.
 - `ClickSpark`: global click/tap spark effect layer.
@@ -51,17 +50,18 @@ platform-specific buttons or overlays.
 
 ## Settings Sliders
 
-`SettingsOverlay` uses the shared `ElasticSlider` component for music and sound.
-Keep future sliders controlled by store state and expose an accessible label:
+`SettingsOverlay` uses native range inputs for music and sound. Keep future sliders
+controlled by store state and expose an accessible label:
 
 ```tsx
-<ElasticSlider
-  ariaLabel={text.sounds}
+<input
+  type="range"
+  aria-label={text.sounds}
   min={0}
   max={1}
   step={0.01}
   value={soundVolume}
-  onChange={onSoundVolumeChange}
+  onChange={(event) => onSoundVolumeChange(Number(event.currentTarget.value))}
 />
 ```
 

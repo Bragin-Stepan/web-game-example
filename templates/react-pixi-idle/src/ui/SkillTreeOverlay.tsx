@@ -21,8 +21,16 @@ const treeNodeBaseClass = [
 
 export function SkillTreeOverlay() {
   const isOpen = useTemplateStore((state) => state.ui.isSkillTreeOpen);
+
+  if (!isOpen) return null;
+
+  return <SkillTreeOverlayContent />;
+}
+
+function SkillTreeOverlayContent() {
   const nodes = useTemplateStore((state) => state.content.progressionNodes);
-  const gameState = useTemplateStore((state) => state.gameState);
+  const energy = useTemplateStore((state) => Math.floor(state.gameState.resources.energy));
+  const owned = useTemplateStore((state) => state.gameState.unlockedNodes);
   const buyNode = useTemplateStore((state) => state.buyNode);
   const toggleSkillTree = useTemplateStore((state) => state.toggleSkillTree);
   const viewport = useProgressionTreeViewport({
@@ -35,14 +43,11 @@ export function SkillTreeOverlay() {
     void requestInterstitialAd('template_skill_tree_close');
   }, [toggleSkillTree]);
 
-  const owned = gameState.unlockedNodes;
   const canBuy = useCallback((node: ProgressionNodeConfig) => {
     return !owned[node.id]
-      && gameState.resources.energy >= (node.cost.energy ?? 0)
+      && energy >= (node.cost.energy ?? 0)
       && node.parentIds.every((parentId) => owned[parentId]);
-  }, [gameState.resources.energy, owned]);
-
-  if (!isOpen) return null;
+  }, [energy, owned]);
 
   const getPosition = (_nodeId: string, node?: ProgressionNodeConfig): ProgressionPoint => (
     node?.position ?? { x: 0, y: 0 }
@@ -51,73 +56,73 @@ export function SkillTreeOverlay() {
   return (
     <Overlay
       title="Progression"
-      subtitle={`${Math.floor(gameState.resources.energy)} energy available`}
+      subtitle={`${energy} energy available`}
       onClose={close}
     >
-        <ProgressionTree
-          nodes={nodes}
-          viewport={viewport}
-          gridSpacing={GRID_SPACING}
-          nodeSize={NODE_SIZE}
-          getPosition={getPosition}
-          getParentIds={(node) => node.parentIds}
-          isNodeVisible={() => true}
-          isConnectionActive={(node) => owned[node.id]}
-          classNames={{
-            surface: [
-              'relative min-h-0 w-full flex-1 overflow-hidden bg-[#f2f2f2]',
-              'bg-[linear-gradient(rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.06)_1px,transparent_1px)] bg-[length:32px_32px]',
-            ].join(' '),
-            transform: 'absolute left-1/2 top-1/2',
-          }}
-          renderNode={({ node, x, y, hasDragged }) => {
-            const isOwned = owned[node.id];
-            const isAvailable = canBuy(node);
-            const isBlocked = !isOwned && !isAvailable;
+      <ProgressionTree
+        nodes={nodes}
+        viewport={viewport}
+        gridSpacing={GRID_SPACING}
+        nodeSize={NODE_SIZE}
+        getPosition={getPosition}
+        getParentIds={(node) => node.parentIds}
+        isNodeVisible={() => true}
+        isConnectionActive={(node) => owned[node.id]}
+        classNames={{
+          surface: [
+            'relative min-h-0 w-full flex-1 overflow-hidden bg-[#f2f2f2]',
+            'bg-[linear-gradient(rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.06)_1px,transparent_1px)] bg-[length:32px_32px]',
+          ].join(' '),
+          transform: 'absolute left-1/2 top-1/2',
+        }}
+        renderNode={({ node, x, y, hasDragged }) => {
+          const isOwned = owned[node.id];
+          const isAvailable = canBuy(node);
+          const isBlocked = !isOwned && !isAvailable;
 
-            return (
-              <button
-                key={node.id}
-                type="button"
-                className={[
-                  treeNodeBaseClass,
-                  isOwned ? 'border-emerald-700 bg-emerald-50' : '',
-                  isAvailable ? 'cursor-pointer border-neutral-950 bg-white' : '',
-                  isBlocked ? 'cursor-default border-neutral-300 bg-white opacity-60 saturate-75' : '',
-                ].filter(Boolean).join(' ')}
-                style={{
-                  width: NODE_SIZE,
-                  height: NODE_SIZE,
-                  transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                }}
-                onPointerDown={(event) => {
-                  event.stopPropagation();
-                  viewport.hasDragged.current = false;
-                }}
-                onPointerMove={(event) => {
-                  event.stopPropagation();
-                }}
-                onPointerUp={(event) => {
-                  event.stopPropagation();
-                }}
-                onClick={() => {
-                  if (hasDragged.current) return;
-                  buyNode(node.id);
-                }}
-              >
-                <strong>{node.title}</strong>
-                <span>{node.description}</span>
-                <small>
-                  {isOwned
-                    ? `+${node.rewards.productionPerSecond ?? 0}/sec`
-                    : isBlocked
-                      ? `Locked: ${node.cost.energy ?? 0} energy`
-                      : `${node.cost.energy ?? 0} energy`}
-                </small>
-              </button>
-            );
-          }}
-        />
+          return (
+            <button
+              key={node.id}
+              type="button"
+              className={[
+                treeNodeBaseClass,
+                isOwned ? 'border-emerald-700 bg-emerald-50' : '',
+                isAvailable ? 'cursor-pointer border-neutral-950 bg-white' : '',
+                isBlocked ? 'cursor-default border-neutral-300 bg-white opacity-60 saturate-75' : '',
+              ].filter(Boolean).join(' ')}
+              style={{
+                width: NODE_SIZE,
+                height: NODE_SIZE,
+                transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+              }}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+                viewport.hasDragged.current = false;
+              }}
+              onPointerMove={(event) => {
+                event.stopPropagation();
+              }}
+              onPointerUp={(event) => {
+                event.stopPropagation();
+              }}
+              onClick={() => {
+                if (hasDragged.current) return;
+                buyNode(node.id);
+              }}
+            >
+              <strong>{node.title}</strong>
+              <span>{node.description}</span>
+              <small>
+                {isOwned
+                  ? `+${node.rewards.productionPerSecond ?? 0}/sec`
+                  : isBlocked
+                    ? `Locked: ${node.cost.energy ?? 0} energy`
+                    : `${node.cost.energy ?? 0} energy`}
+              </small>
+            </button>
+          );
+        }}
+      />
     </Overlay>
   );
 }

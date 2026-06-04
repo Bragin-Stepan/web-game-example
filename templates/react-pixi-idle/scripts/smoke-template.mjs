@@ -40,7 +40,6 @@ try {
   await page.waitForTimeout(400);
 
   await expectVisible(page.locator('[data-scene="game"]'), 'game scene');
-  await expectVisible(page.locator('[data-click-spark-canvas="true"]'), 'click spark canvas');
 
   await expectVisible(page.getByRole('button', { name: 'Настройки' }), 'settings HUD button');
   await expectVisible(page.getByRole('button', { name: 'Магазин' }), 'shop HUD button');

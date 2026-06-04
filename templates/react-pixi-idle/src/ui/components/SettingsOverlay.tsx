@@ -3,7 +3,6 @@ import type { PlatformLanguageCode } from '@core-inc/yandex-game-kit';
 import { FaChevronLeft, FaChevronRight, FaMusic, FaVolumeUp } from 'react-icons/fa';
 import { LANGUAGE_OPTIONS } from '../../config/settings';
 import { getUIText } from '../../config/text';
-import { ElasticSlider } from './ElasticSlider';
 import { Overlay } from './Overlay';
 
 export type SettingsOverlayProps = {
@@ -93,15 +92,19 @@ function VolumeSlider({
         <strong className="text-sm font-black text-neutral-600">{label}</strong>
         <em className="text-sm not-italic tabular-nums font-black text-neutral-500">{Math.round(value * 100)}%</em>
       </span>
-      <ElasticSlider
-        ariaLabel={label}
-        min={0}
-        max={1}
-        step={0.01}
-        value={value}
-        leftIcon={leftIcon}
-        onChange={onChange}
-      />
+      <label className="flex h-8 min-w-0 items-center gap-3">
+        <span className="grid h-6 w-6 shrink-0 place-items-center text-neutral-700">{leftIcon}</span>
+        <input
+          type="range"
+          aria-label={label}
+          min={0}
+          max={1}
+          step={0.01}
+          value={value}
+          className="h-2 min-w-0 flex-1 cursor-pointer accent-neutral-950"
+          onChange={(event) => onChange(Number(event.currentTarget.value))}
+        />
+      </label>
     </div>
   );
 }

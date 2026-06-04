@@ -139,7 +139,6 @@ Available starter components:
 - `SettingsOverlay`
 - `ShopOverlay`
 - `Tooltip`
-- `ElasticSlider`
 - `ClickSpark`
 
 Shared UI styling is component-owned through Tailwind utility classes. Keep one-off CSS out of popup and HUD components unless a browser control requires vendor selectors.

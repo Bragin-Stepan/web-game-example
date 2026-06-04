@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 export type ResourceBarItem = {
   id: string;
   label: string;
@@ -9,7 +11,7 @@ export type ResourceBarProps = {
   items: ResourceBarItem[];
 };
 
-export function ResourceBar({ items }: ResourceBarProps) {
+function ResourceBarComponent({ items }: ResourceBarProps) {
   return (
     <div className="flex items-center gap-2.5 max-[620px]:order-2 max-[620px]:basis-full">
       {items.map((item) => (
@@ -25,3 +27,5 @@ export function ResourceBar({ items }: ResourceBarProps) {
     </div>
   );
 }
+
+export const ResourceBar = memo(ResourceBarComponent);

@@ -4,6 +4,7 @@ import { PointerInput, type PointerInputCallbacks } from './input/PointerInput';
 import { BackgroundLayer } from './layers/BackgroundLayer';
 import { CoreLayer } from './layers/CoreLayer';
 import { FxLayer } from './layers/FxLayer';
+import { getRenderResolution } from './renderResolution';
 
 export class PixiApp {
   app: Application;
@@ -28,8 +29,8 @@ export class PixiApp {
       width,
       height,
       backgroundColor: 0x07321d,
-      antialias: true,
-      resolution: window.devicePixelRatio || 1,
+      antialias: false,
+      resolution: getRenderResolution(),
       autoDensity: true,
     });
 
@@ -37,6 +38,7 @@ export class PixiApp {
     this.app.stage.addChild(this.root);
     this.pointerInput.attach(this.app.canvas, inputCallbacks);
     this.backgroundLayer.update(width, height);
+    this.fxLayer.resize(width, height);
   }
 
   resize(width: number, height: number) {
@@ -44,11 +46,12 @@ export class PixiApp {
     this.height = height;
     this.app.renderer.resize(width, height);
     this.backgroundLayer.update(width, height);
+    this.fxLayer.resize(width, height);
   }
 
-  update(state: TemplateGameState) {
-    this.coreLayer.update(state, this.width, this.height);
-    this.fxLayer.update(state, this.width, this.height);
+  update(state: TemplateGameState, renderTimeMs: number) {
+    this.coreLayer.update(state, this.width, this.height, renderTimeMs);
+    this.fxLayer.update(renderTimeMs);
   }
 
   destroy() {

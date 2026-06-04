@@ -1,5 +1,6 @@
 import type { PointerEvent, ReactNode } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
+import { getRenderResolution } from '../../renderer/renderResolution';
 import { cn } from '../lib/cn';
 
 type SparkBurst = {
@@ -40,7 +41,7 @@ export function ClickSpark({
     if (!canvas || !parent) return;
 
     const rect = parent.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = getRenderResolution();
     canvas.width = Math.max(1, Math.floor(rect.width * dpr));
     canvas.height = Math.max(1, Math.floor(rect.height * dpr));
     canvas.style.width = `${rect.width}px`;
@@ -57,7 +58,7 @@ export function ClickSpark({
     if (!canvas || !context) return;
 
     const now = performance.now();
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = getRenderResolution();
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.setTransform(dpr, 0, 0, dpr, 0, 0);

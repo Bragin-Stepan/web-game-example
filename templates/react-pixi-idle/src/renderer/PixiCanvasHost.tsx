@@ -37,7 +37,7 @@ export function PixiCanvasHost({ className = '' }: PixiCanvasHostProps) {
 
         const loop = new GameLoop();
         loopRef.current = loop;
-        loop.start(() => pixi.update(useTemplateStore.getState().gameState));
+        loop.start((renderTimeMs) => pixi.update(useTemplateStore.getState().gameState, renderTimeMs));
       });
 
     const handleResize = () => {

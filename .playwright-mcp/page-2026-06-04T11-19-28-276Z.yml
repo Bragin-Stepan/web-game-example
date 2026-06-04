@@ -1,0 +1,15 @@
+- main [ref=e3]:
+  - generic [ref=e5]:
+    - button "Навыки" [ref=e6]:
+      - img [ref=e8]
+    - button "Магазин" [ref=e10]:
+      - img [ref=e12]
+    - button "Настройки" [ref=e14]:
+      - img [ref=e16]
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: Energy
+        - strong [ref=e21]: "259"
+      - generic [ref=e22]:
+        - generic [ref=e23]: Rate
+        - strong [ref=e24]: 0.5/s
