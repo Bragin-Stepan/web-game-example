@@ -47,9 +47,10 @@ Copy `templates/react-pixi-idle`, then copy the root `packages` directory into t
 3. `src/content/packs/default/content.json`: resources and progression.
 4. `src/game/types.ts`: game state types.
 5. `src/game/GameStore.ts`: commands and simulation.
-6. `src/renderer/PixiApp.ts`: scene composition.
-7. `src/renderer/layers/*`: visual layers.
-8. `src/ui/*`: HUD, overlays, settings.
+6. `src/scenes/*`: loading, menu, game, and other top-level screens.
+7. `src/renderer/PixiApp.ts`: Pixi composition.
+8. `src/renderer/layers/*`: visual layers.
+9. `src/ui/*`: HUD, overlays, settings.
 
 ## Keep Initially
 

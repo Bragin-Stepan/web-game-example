@@ -39,6 +39,9 @@ try {
   await page.waitForLoadState('load');
   await page.waitForTimeout(400);
 
+  await expectVisible(page.locator('[data-scene="game"]'), 'game scene');
+  await expectVisible(page.locator('[data-click-spark-canvas="true"]'), 'click spark canvas');
+
   await expectVisible(page.getByRole('button', { name: 'Настройки' }), 'settings HUD button');
   await expectVisible(page.getByRole('button', { name: 'Магазин' }), 'shop HUD button');
 
@@ -47,6 +50,8 @@ try {
   await expectVisible(page.getByRole('slider', { name: /Звуки/ }), 'sound volume slider');
   await page.getByRole('button', { name: 'Следующий язык' }).click();
   await expectVisible(page.getByRole('heading', { name: 'Settings' }), 'language switch to English');
+  await expectVisible(page.getByRole('slider', { name: /Sounds/ }), 'sound slider after language switch');
+  await page.getByRole('slider', { name: /Sounds/ }).press('ArrowLeft');
   await page.getByRole('button', { name: 'Close' }).click();
 
   await page.getByRole('button', { name: 'Shop' }).click();

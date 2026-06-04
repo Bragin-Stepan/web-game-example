@@ -1,8 +1,9 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { PlatformLanguageCode } from '@core-inc/yandex-game-kit';
 import { FaChevronLeft, FaChevronRight, FaMusic, FaVolumeUp } from 'react-icons/fa';
 import { LANGUAGE_OPTIONS } from '../../config/settings';
 import { getUIText } from '../../config/text';
+import { ElasticSlider } from './ElasticSlider';
 import { Overlay } from './Overlay';
 
 export type SettingsOverlayProps = {
@@ -59,13 +60,13 @@ export function SettingsOverlay({
         </div>
 
         <VolumeSlider
-          icon={<FaVolumeUp />}
+          leftIcon={<FaVolumeUp />}
           label={text.sounds}
           value={soundVolume}
           onChange={onSoundVolumeChange}
         />
         <VolumeSlider
-          icon={<FaMusic />}
+          leftIcon={<FaMusic />}
           label={text.music}
           value={musicVolume}
           onChange={onMusicVolumeChange}
@@ -76,45 +77,31 @@ export function SettingsOverlay({
 }
 
 function VolumeSlider({
-  icon,
+  leftIcon,
   label,
   value,
   onChange,
 }: {
-  icon: ReactNode;
+  leftIcon: ReactNode;
   label: string;
   value: number;
   onChange: (volume: number) => void;
 }) {
   return (
-    <label className="grid gap-2">
+    <div className="grid gap-2">
       <span className="flex items-center justify-between gap-3">
-        <strong className="inline-flex items-center gap-2 text-sm font-black text-neutral-600">
-          {icon}
-          {label}
-        </strong>
+        <strong className="text-sm font-black text-neutral-600">{label}</strong>
         <em className="text-sm not-italic tabular-nums font-black text-neutral-500">{Math.round(value * 100)}%</em>
       </span>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={Math.round(value * 100)}
-        className={[
-          'h-2 w-full cursor-pointer appearance-none rounded-full',
-          'bg-[linear-gradient(90deg,#171717_0,#171717_var(--range-progress),#d0d0d0_var(--range-progress),#d0d0d0_100%)]',
-          '[&::-webkit-slider-runnable-track]:h-2 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-transparent',
-          '[&::-webkit-slider-thumb]:-mt-1.5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5',
-          '[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2',
-          '[&::-webkit-slider-thumb]:border-slate-300 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-sm',
-          '[&::-moz-range-track]:h-2 [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-neutral-300',
-          '[&::-moz-range-progress]:h-2 [&::-moz-range-progress]:rounded-full [&::-moz-range-progress]:bg-neutral-950',
-          '[&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:rounded-full',
-          '[&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-slate-300 [&::-moz-range-thumb]:bg-white',
-        ].join(' ')}
-        style={{ '--range-progress': `${Math.round(value * 100)}%` } as CSSProperties}
-        onChange={(event) => onChange(Number(event.currentTarget.value) / 100)}
+      <ElasticSlider
+        ariaLabel={label}
+        min={0}
+        max={1}
+        step={0.01}
+        value={value}
+        leftIcon={leftIcon}
+        onChange={onChange}
       />
-    </label>
+    </div>
   );
 }

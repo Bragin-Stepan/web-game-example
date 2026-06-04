@@ -14,8 +14,10 @@ src/ui/lib/cn.ts
 - `IconButton`: square icon button with accessible label and tooltip.
 - `Tooltip`: small hover/focus tooltip used by icon controls.
 - `Overlay`: reusable popup/panel shell with a dark header and light body.
+- `ElasticSlider`: springy controlled slider for settings.
 - `ConfirmDialog`: confirmation popup.
 - `ResourceBar`: compact HUD resource chips.
+- `ClickSpark`: global click/tap spark effect layer.
 - `SettingsOverlay`: example settings popup.
 - `ShopOverlay`: config-driven purchase popup example.
 - slider rows for settings such as language, music, and sound volume.
@@ -49,18 +51,25 @@ platform-specific buttons or overlays.
 
 ## Settings Sliders
 
-`SettingsOverlay` demonstrates controlled range inputs:
+`SettingsOverlay` uses the shared `ElasticSlider` component for music and sound.
+Keep future sliders controlled by store state and expose an accessible label:
 
 ```tsx
-<SettingsOverlay
-  language={language}
-  musicVolume={audio.musicVolume}
-  soundVolume={audio.soundVolume}
-  onLanguageChange={setLanguage}
-  onMusicVolumeChange={(musicVolume) => updateAudioSettings({ musicVolume })}
-  onSoundVolumeChange={(soundVolume) => updateAudioSettings({ soundVolume })}
+<ElasticSlider
+  ariaLabel={text.sounds}
+  min={0}
+  max={1}
+  step={0.01}
+  value={soundVolume}
+  onChange={onSoundVolumeChange}
 />
 ```
 
 The template stores these values in `GameStore` UI state and persists them to `localStorage`
 under the key from `src/config/settings.ts`.
+
+## UI Effects
+
+`App` wraps the active scene in `ClickSpark`, so pointer taps work across the
+canvas, HUD, and popups. Keep the effect global unless a game needs scene-specific
+feedback rules.

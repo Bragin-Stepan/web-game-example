@@ -8,6 +8,7 @@
 - `src/config/text.ts`
 - `src/game/types.ts`
 - `src/game/GameStore.ts`
+- `src/scenes/*`
 - `src/renderer/layers/*`
 - `src/ui/*`
 - `src/index.css`
@@ -19,6 +20,7 @@
 - shop product list and platform access rules in `src/config/products.ts`;
 - language list, audio defaults, and settings storage key in `src/config/settings.ts`;
 - shared UI labels in `src/config/text.ts`;
+- loading/menu/game screen composition in `src/scenes/*`;
 - settings rows in `src/ui/components/SettingsOverlay.tsx`;
 - tree visibility and locked-state rules in `src/ui/SkillTreeOverlay.tsx`;
 

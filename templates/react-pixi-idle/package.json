@@ -15,6 +15,7 @@
     "@core-inc/progression-tree": "file:../../packages/progression-tree",
     "@core-inc/yandex-game-kit": "file:../../packages/yandex-game-kit",
     "@types/ysdk": "^1.2.0",
+    "motion": "^12.40.0",
     "pixi.js": "^8.6.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

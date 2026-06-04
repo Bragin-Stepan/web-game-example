@@ -6,6 +6,8 @@ The template has three boundaries.
 
 Owns game-specific behavior:
 
+- `src/app`: bootstrap hooks and app-level lifecycle wiring.
+- `src/scenes`: scene registry and top-level screens such as loading and game.
 - `src/game`: state, commands, simulation.
 - `src/content`: content pack loading and schemas.
 - `src/renderer`: Pixi scene and input.
@@ -13,6 +15,16 @@ Owns game-specific behavior:
 - `src/platform`: save format and platform adapter.
 
 Change these freely for a new game.
+
+`src/app/App.tsx` should stay thin. It renders immediately, runs platform bootstrap
+through `useAppBootstrap()`, and hands control to `SceneHost`. Add new screens by
+adding a scene component and registering it in `src/scenes/SceneHost.tsx` instead
+of branching inside `App`.
+
+The loading scene is intentionally visual-only: a centered loading icon while
+Yandex/browser platform bootstrap finishes. The game scene mounts Pixi, HUD,
+overlays, input guards, language sync, and audio/focus lifecycle only after
+bootstrap resolves.
 
 ## Shared Packages
 

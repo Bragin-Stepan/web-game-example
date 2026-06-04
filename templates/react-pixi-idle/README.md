@@ -55,7 +55,8 @@ Manual:
 
 ```text
 src/
-  app/App.tsx                         React shell, Pixi mount, game loop lifecycle
+  app/App.tsx                         Thin React shell and active scene selection
+  app/use*.ts                         Bootstrap, input, language, and audio lifecycle hooks
   audio/AudioManager.ts               App-owned WebAudio asset resolver
   config/products.ts                  Product ids and platform shop access rules
   config/settings.ts                  Settings storage key, default volumes, languages
@@ -68,10 +69,17 @@ src/
   game/types.ts                       Game state types
   platform/bootstrap.ts               Adapter into @core-inc/yandex-game-kit
   platform/gameProgress.ts            Versioned save serializer/restore
+  scenes/SceneHost.tsx                Scene registry and active scene renderer
+  scenes/LoadingScene.tsx             Initial loading screen before game mount
+  scenes/GameScene.tsx                Game scene lifecycle composition
+  renderer/PixiCanvasHost.tsx         Pixi mount and game loop lifecycle
   renderer/PixiApp.ts                 Pixi application composition
   renderer/layers/*                   Replaceable Pixi layers
   renderer/input/PointerInput.ts      Canvas pointer input adapter
-  ui/components/*                     Shared popup/button/HUD components
+  ui/GameHud.tsx                      HUD composition
+  ui/GameOverlays.tsx                 Popup and modal composition
+  ui/components/*                     Shared popup/button/HUD/slider components
+  ui/effects/ClickSpark.tsx           Global click/tap spark effect
   ui/ShopOverlay.tsx                  Config-driven purchase popup example
   ui/SkillTreeOverlay.tsx             Progression tree example UI
   index.css                           Fullscreen shell and app-specific CSS
@@ -115,6 +123,7 @@ Keep `src/platform/bootstrap.ts`, `src/platform/gameProgress.ts`, `src/audio/Aud
 - Content data is validated before release.
 - Product ids and shop visibility rules are config-owned.
 - `isPlatformAccessAllowed()` gates platform-specific UI such as the shop.
+- `SceneHost` owns top-level screens; keep loading/menu/game transitions there.
 
 ## Shared UI
 
@@ -130,6 +139,8 @@ Available starter components:
 - `SettingsOverlay`
 - `ShopOverlay`
 - `Tooltip`
+- `ElasticSlider`
+- `ClickSpark`
 
 Shared UI styling is component-owned through Tailwind utility classes. Keep one-off CSS out of popup and HUD components unless a browser control requires vendor selectors.
 
