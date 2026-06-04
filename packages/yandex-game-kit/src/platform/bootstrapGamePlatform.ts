@@ -19,6 +19,7 @@ export type GamePlatformBootstrapOptions<TGameState, TSave> = {
   setGameState(state: TGameState): void;
   serializeSave(state: TGameState): TSave;
   restoreSave(save: unknown): TGameState | null;
+  canShowInterstitialAd?: (reason: string) => boolean | Promise<boolean>;
   setLanguage(language: ReturnType<PlatformService['getLanguage']>): void;
   setFocusPaused(paused: boolean, reason: PlatformPauseReason): void;
   pauseAudio?(): void;
@@ -31,6 +32,7 @@ export async function bootstrapGamePlatform<TGameState, TSave>(
   const platform = await initializePlatformService();
 
   configureInterstitialAdController({
+    canShowAd: options.canShowInterstitialAd,
     onBeforeAd: () => {
       platform.lifecycle.setGameplayActive(false);
       options.setFocusPaused(true, 'sdk');

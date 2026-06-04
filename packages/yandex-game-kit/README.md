@@ -11,6 +11,7 @@ The package intentionally does not depend on React, Zustand, Pixi, Phaser, or a 
 - `initializePlatformService()` / `getPlatformService()`.
 - `bootstrapGamePlatform(options)`.
 - Interstitial ad cooldown/controller helpers.
+- Platform capabilities, platform access helpers, and commerce contract.
 - Web Audio manager that avoids browser media notification UI.
 - `installGameInputGuards()`.
 - `normalizePlatformLanguage()`.
@@ -45,4 +46,15 @@ audio.configure({
     click: { key: 'click', src: '/click.wav', volume: 0.8 },
   },
 });
+```
+
+```ts
+import { PlatformId, getPlatformService, isPlatformAccessAllowed } from '@core-inc/yandex-game-kit';
+
+const showShop = isPlatformAccessAllowed({
+  platforms: [PlatformId.Yandex],
+  allowDevMode: true,
+}, { devMode: import.meta.env.DEV });
+
+const owned = await getPlatformService().commerce.hasPurchase('disable_ads');
 ```

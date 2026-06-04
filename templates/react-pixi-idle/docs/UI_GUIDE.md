@@ -4,48 +4,48 @@ Shared UI components live in:
 
 ```text
 src/ui/components/
-src/ui/styles/theme.css
+src/ui/components/uiPrimitives.ts
+src/ui/lib/cn.ts
 ```
 
 ## Components
 
 - `Button`: primary/secondary/ghost/danger button with optional shine.
-- `IconButton`: square icon button with accessible label.
-- `Overlay`: reusable popup/panel shell.
+- `IconButton`: square icon button with accessible label and tooltip.
+- `Tooltip`: small hover/focus tooltip used by icon controls.
+- `Overlay`: reusable popup/panel shell with a dark header and light body.
 - `ConfirmDialog`: confirmation popup.
 - `ResourceBar`: compact HUD resource chips.
 - `SettingsOverlay`: example settings popup.
-- slider rows for settings such as music and sound volume.
+- `ShopOverlay`: config-driven purchase popup example.
+- slider rows for settings such as language, music, and sound volume.
 
 ## Shine Animation
 
-Any component can opt into the sweep highlight with:
+Buttons can opt into a Tailwind-powered sweep highlight with:
 
 ```tsx
 <Button shine>Buy</Button>
 ```
 
-Or directly:
-
-```tsx
-<div className="ui-shine">...</div>
-```
-
-The animation is defined in `src/ui/styles/theme.css` as `ui-shine-sweep`.
-
 ## Theme
 
-Change colors and panel feel through CSS variables in `:root`:
+Change colors and panel feel in the shared components first:
 
-```css
-:root {
-  --ui-bg: #0f172a;
-  --ui-panel: #111827;
-  --ui-accent: #38bdf8;
-}
+```tsx
+<section className="rounded-xl border border-black/30 bg-neutral-100 shadow-2xl" />
 ```
 
-Prefer changing variables and shared components before styling one-off overlays.
+Prefer Tailwind utilities in reusable components over adding global CSS.
+
+For reusable variants, edit `src/ui/components/uiPrimitives.ts` instead of
+duplicating long Tailwind class strings across components.
+
+## Platform UI
+
+Shop visibility is controlled by `SHOP_ACCESS_RULE` in `src/config/products.ts`.
+Use `isPlatformAccessAllowed()` from `@core-inc/yandex-game-kit` for other
+platform-specific buttons or overlays.
 
 ## Settings Sliders
 
@@ -53,11 +53,14 @@ Prefer changing variables and shared components before styling one-off overlays.
 
 ```tsx
 <SettingsOverlay
+  language={language}
   musicVolume={audio.musicVolume}
   soundVolume={audio.soundVolume}
+  onLanguageChange={setLanguage}
   onMusicVolumeChange={(musicVolume) => updateAudioSettings({ musicVolume })}
   onSoundVolumeChange={(soundVolume) => updateAudioSettings({ soundVolume })}
 />
 ```
 
-The template stores these values in `GameStore` UI state and persists them to `localStorage`.
+The template stores these values in `GameStore` UI state and persists them to `localStorage`
+under the key from `src/config/settings.ts`.

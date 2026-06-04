@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { installGameInputGuards } from '@core-inc/yandex-game-kit';
+import { isPlatformAccessAllowed, installGameInputGuards } from '@core-inc/yandex-game-kit';
+import { FaCog, FaShoppingCart, FaSitemap } from 'react-icons/fa';
 import { AudioManager } from '../audio/AudioManager';
+import { SHOP_ACCESS_RULE } from '../config/products';
+import { getUIText } from '../config/text';
 import { GameLoop } from '../game/GameLoop';
 import { useTemplateStore } from '../game/GameStore';
 import { PixiApp } from '../renderer/PixiApp';
+import { ShopOverlay } from '../ui/ShopOverlay';
 import { SkillTreeOverlay } from '../ui/SkillTreeOverlay';
-import { Button } from '../ui/components/Button';
 import { IconButton } from '../ui/components/IconButton';
 import { ResourceBar } from '../ui/components/ResourceBar';
 import { SettingsOverlay } from '../ui/components/SettingsOverlay';
@@ -19,15 +22,22 @@ export function App() {
   const productionPerSecond = useTemplateStore((state) => state.gameState.productionPerSecond);
   const isPaused = useTemplateStore((state) => state.ui.isPaused || state.ui.isFocusPaused);
   const isSettingsOpen = useTemplateStore((state) => state.ui.isSettingsOpen);
-  const isManuallyPaused = useTemplateStore((state) => state.ui.isPaused);
   const audio = useTemplateStore((state) => state.ui.audio);
+  const language = useTemplateStore((state) => state.ui.language);
   const toggleSkillTree = useTemplateStore((state) => state.toggleSkillTree);
   const toggleSettings = useTemplateStore((state) => state.toggleSettings);
-  const togglePause = useTemplateStore((state) => state.togglePause);
+  const toggleShop = useTemplateStore((state) => state.toggleShop);
   const updateUI = useTemplateStore((state) => state.updateUI);
   const updateAudioSettings = useTemplateStore((state) => state.updateAudioSettings);
+  const setLanguage = useTemplateStore((state) => state.setLanguage);
+  const text = getUIText(language);
+  const showShop = isPlatformAccessAllowed(SHOP_ACCESS_RULE, { devMode: import.meta.env.DEV });
 
   useEffect(() => installGameInputGuards(), []);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     AudioManager.configure({ musicPlaylist: [], sounds: {} });
@@ -110,32 +120,38 @@ export function App() {
   }, []);
 
   return (
-    <main id="game-root">
-      <div ref={containerRef} className="canvas-root" />
+    <main id="game-root" className="fixed inset-0 h-dvh w-screen">
+      <div ref={containerRef} className="fixed inset-0 h-dvh w-screen" />
 
-      <section className="hud">
+      <section className="fixed left-4 top-4 z-10 flex max-w-[calc(100vw-2rem)] items-center gap-4 max-[620px]:left-3 max-[620px]:right-3 max-[620px]:flex-wrap">
+        <IconButton label={text.skills} variant="plain" tooltipPlacement="bottom" onClick={toggleSkillTree}>
+          <FaSitemap />
+        </IconButton>
+        {showShop ? (
+          <IconButton label={text.shop} variant="plain" tooltipPlacement="bottom" onClick={toggleShop}>
+            <FaShoppingCart />
+          </IconButton>
+        ) : null}
+        <IconButton label={text.settings} variant="plain" tooltipPlacement="bottom" onClick={toggleSettings}>
+          <FaCog />
+        </IconButton>
         <ResourceBar
           items={[
             { id: 'energy', label: 'Energy', value: Math.floor(energy), accent: '#38bdf8' },
             { id: 'rate', label: 'Rate', value: `${productionPerSecond.toFixed(1)}/s`, accent: '#2dd4bf' },
           ]}
         />
-        <Button type="button" variant="primary" shine onClick={toggleSkillTree}>
-          Skills
-        </Button>
-        <IconButton label="Settings" shine onClick={toggleSettings}>
-          *
-        </IconButton>
       </section>
 
-      {isPaused ? <div className="pause-pill">Paused</div> : null}
+      {isPaused ? <div className="fixed left-4 top-[74px] z-10 grid min-h-10 place-items-center px-3.5 font-black text-amber-500">Paused</div> : null}
       <SkillTreeOverlay />
+      {showShop ? <ShopOverlay /> : null}
       {isSettingsOpen ? (
         <SettingsOverlay
-          isPaused={isManuallyPaused}
+          language={language}
           musicVolume={audio.musicVolume}
           soundVolume={audio.soundVolume}
-          onTogglePause={togglePause}
+          onLanguageChange={setLanguage}
           onMusicVolumeChange={(musicVolume) => updateAudioSettings({ musicVolume })}
           onSoundVolumeChange={(soundVolume) => updateAudioSettings({ soundVolume })}
           onClose={toggleSettings}

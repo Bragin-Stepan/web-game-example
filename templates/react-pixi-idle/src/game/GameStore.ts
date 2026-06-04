@@ -1,13 +1,17 @@
 import { create } from 'zustand';
+import type { PlatformLanguageCode } from '@core-inc/yandex-game-kit';
+import { DEFAULT_AUDIO_SETTINGS, DEFAULT_LANGUAGE, TEMPLATE_SETTINGS_STORAGE_KEY } from '../config/settings';
 import { loadDefaultContentPack } from '../content/ContentLoader';
 import type { TemplateContentPack, ProgressionNodeConfig } from '../content/schemas/ContentTypes';
 import type { TemplateGameState } from './types';
 
-const AUDIO_SETTINGS_STORAGE_KEY = 'react-pixi-idle-template.audio';
-
 export type AudioSettings = {
   musicVolume: number;
   soundVolume: number;
+};
+
+type StoredTemplateSettings = Partial<AudioSettings> & {
+  language?: PlatformLanguageCode;
 };
 
 export type TemplateUIState = {
@@ -15,8 +19,9 @@ export type TemplateUIState = {
   isFocusPaused: boolean;
   isSkillTreeOpen: boolean;
   isSettingsOpen: boolean;
+  isShopOpen: boolean;
   audio: AudioSettings;
-  language: 'en' | 'ru';
+  language: PlatformLanguageCode;
 };
 
 export type TemplateStoreState = {
@@ -28,10 +33,11 @@ export type TemplateStoreState = {
   buyNode: (nodeId: string) => void;
   updateUI: (partial: Partial<TemplateUIState>) => void;
   updateAudioSettings: (partial: Partial<AudioSettings>) => void;
-  setLanguage: (language: TemplateUIState['language']) => void;
+  setLanguage: (language: PlatformLanguageCode) => void;
   togglePause: () => void;
   toggleSkillTree: () => void;
   toggleSettings: () => void;
+  toggleShop: () => void;
 };
 
 export function createInitialGameState(): TemplateGameState {
@@ -50,43 +56,40 @@ export function createInitialGameState(): TemplateGameState {
 }
 
 const content = loadDefaultContentPack();
+const initialSettings = loadTemplateSettings();
 
 function normalizeVolume(volume: number) {
   return Math.max(0, Math.min(1, volume));
 }
 
-function loadAudioSettings(): AudioSettings {
+function loadTemplateSettings(): StoredTemplateSettings {
   if (typeof window === 'undefined') {
-    return {
-      musicVolume: 0.25,
-      soundVolume: 0.4,
-    };
+    return {};
   }
 
   try {
-    const raw = window.localStorage.getItem(AUDIO_SETTINGS_STORAGE_KEY);
-    if (!raw) {
-      return {
-        musicVolume: 0.25,
-        soundVolume: 0.4,
-      };
-    }
-    const parsed = JSON.parse(raw) as Partial<AudioSettings>;
-    return {
-      musicVolume: normalizeVolume(parsed.musicVolume ?? 0.25),
-      soundVolume: normalizeVolume(parsed.soundVolume ?? 0.4),
-    };
+    const raw = window.localStorage.getItem(TEMPLATE_SETTINGS_STORAGE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as StoredTemplateSettings;
   } catch {
-    return {
-      musicVolume: 0.25,
-      soundVolume: 0.4,
-    };
+    return {};
   }
 }
 
-function saveAudioSettings(settings: AudioSettings) {
+function getInitialAudioSettings(settings: StoredTemplateSettings): AudioSettings {
+  return {
+    musicVolume: normalizeVolume(settings.musicVolume ?? DEFAULT_AUDIO_SETTINGS.musicVolume),
+    soundVolume: normalizeVolume(settings.soundVolume ?? DEFAULT_AUDIO_SETTINGS.soundVolume),
+  };
+}
+
+function getInitialLanguage(settings: StoredTemplateSettings): PlatformLanguageCode {
+  return settings.language ?? DEFAULT_LANGUAGE;
+}
+
+function saveTemplateSettings(settings: StoredTemplateSettings) {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(AUDIO_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+  window.localStorage.setItem(TEMPLATE_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
 }
 
 export const useTemplateStore = create<TemplateStoreState>((set, get) => ({
@@ -97,8 +100,9 @@ export const useTemplateStore = create<TemplateStoreState>((set, get) => ({
     isFocusPaused: false,
     isSkillTreeOpen: false,
     isSettingsOpen: false,
-    audio: loadAudioSettings(),
-    language: 'en',
+    isShopOpen: false,
+    audio: getInitialAudioSettings(initialSettings),
+    language: getInitialLanguage(initialSettings),
   },
 
   setGameState: (state) => set({ gameState: state }),
@@ -162,7 +166,10 @@ export const useTemplateStore = create<TemplateStoreState>((set, get) => ({
     };
     audio.musicVolume = normalizeVolume(audio.musicVolume);
     audio.soundVolume = normalizeVolume(audio.soundVolume);
-    saveAudioSettings(audio);
+    saveTemplateSettings({
+      ...audio,
+      language: ui.language,
+    });
     set({ ui: { ...ui, audio } });
   },
 
@@ -170,6 +177,10 @@ export const useTemplateStore = create<TemplateStoreState>((set, get) => ({
     if (typeof document !== 'undefined') {
       document.documentElement.lang = language;
     }
+    saveTemplateSettings({
+      ...get().ui.audio,
+      language,
+    });
     get().updateUI({ language });
   },
 
@@ -186,5 +197,10 @@ export const useTemplateStore = create<TemplateStoreState>((set, get) => ({
   toggleSettings: () => {
     const { ui } = get();
     set({ ui: { ...ui, isSettingsOpen: !ui.isSettingsOpen } });
+  },
+
+  toggleShop: () => {
+    const { ui } = get();
+    set({ ui: { ...ui, isShopOpen: !ui.isShopOpen } });
   },
 }));

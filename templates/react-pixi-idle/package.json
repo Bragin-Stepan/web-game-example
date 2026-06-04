@@ -6,23 +6,28 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "smoke": "node scripts/smoke-template.mjs",
     "validate:content": "node scripts/validate-content.mjs",
     "audit:yandex": "node scripts/audit-yandex-game.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@core-inc/yandex-game-kit": "file:../../packages/yandex-game-kit",
     "@core-inc/progression-tree": "file:../../packages/progression-tree",
+    "@core-inc/yandex-game-kit": "file:../../packages/yandex-game-kit",
     "@types/ysdk": "^1.2.0",
     "pixi.js": "^8.6.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.6.0",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/vite": "^4.3.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "~5.6.2",
     "vite": "^5.4.14"
   }

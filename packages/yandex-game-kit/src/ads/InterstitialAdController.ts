@@ -6,6 +6,7 @@ const DEFAULT_REPEAT_INTERSTITIAL_COOLDOWN_MS = 60 * 1000;
 export type InterstitialAdControllerOptions = {
   initialCooldownMs?: number;
   repeatCooldownMs?: number;
+  canShowAd?: (reason: string) => boolean | Promise<boolean>;
   onBeforeAd?: (reason: string) => void;
   onAfterAd?: (reason: string) => void | Promise<void>;
 };
@@ -15,12 +16,14 @@ let isInitialized = false;
 let isShowing = false;
 let initialCooldownMs = DEFAULT_INITIAL_INTERSTITIAL_COOLDOWN_MS;
 let repeatCooldownMs = DEFAULT_REPEAT_INTERSTITIAL_COOLDOWN_MS;
+let canShowAd: InterstitialAdControllerOptions['canShowAd'];
 let onBeforeAd: InterstitialAdControllerOptions['onBeforeAd'];
 let onAfterAd: InterstitialAdControllerOptions['onAfterAd'];
 
 export function configureInterstitialAdController(options: InterstitialAdControllerOptions) {
   initialCooldownMs = options.initialCooldownMs ?? initialCooldownMs;
   repeatCooldownMs = options.repeatCooldownMs ?? repeatCooldownMs;
+  canShowAd = options.canShowAd ?? canShowAd;
   onBeforeAd = options.onBeforeAd ?? onBeforeAd;
   onAfterAd = options.onAfterAd ?? onAfterAd;
 }
@@ -31,7 +34,7 @@ export function initializeInterstitialAdCooldown(now = Date.now()) {
   nextAllowedAt = now + initialCooldownMs;
 }
 
-export function requestInterstitialAd(reason: string): boolean {
+export async function requestInterstitialAd(reason: string): Promise<boolean> {
   if (!isInitialized) {
     initializeInterstitialAdCooldown();
   }
@@ -42,6 +45,17 @@ export function requestInterstitialAd(reason: string): boolean {
   }
 
   isShowing = true;
+  try {
+    if (canShowAd && !(await canShowAd(reason))) {
+      isShowing = false;
+      return false;
+    }
+  } catch (error) {
+    console.warn(`Interstitial ad "${reason}" availability check failed.`, error);
+    isShowing = false;
+    return false;
+  }
+
   nextAllowedAt = now + repeatCooldownMs;
   onBeforeAd?.(reason);
 

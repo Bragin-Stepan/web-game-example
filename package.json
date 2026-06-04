@@ -15,6 +15,7 @@
     "build:template": "npm run build -w @core-inc/react-pixi-idle-template",
     "build": "npm run build:packages && npm run build:template",
     "lint": "eslint .",
+    "smoke:template": "npm run smoke -w @core-inc/react-pixi-idle-template",
     "validate:content": "npm run validate:content -w @core-inc/react-pixi-idle-template",
     "audit:yandex": "npm run audit:yandex -w @core-inc/react-pixi-idle-template",
     "typecheck:kit": "npm run typecheck -w @core-inc/yandex-game-kit && npm run typecheck -w @core-inc/progression-tree"

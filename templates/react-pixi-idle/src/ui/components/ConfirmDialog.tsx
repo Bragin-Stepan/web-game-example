@@ -26,13 +26,13 @@ export function ConfirmDialog({
       width="min(460px, 100%)"
       height="auto"
       footer={(
-        <div className="ui-dialog-actions">
+        <div className="flex w-full justify-end gap-2.5">
           <Button type="button" variant="ghost" onClick={onCancel}>{cancelLabel}</Button>
           <Button type="button" variant="primary" shine onClick={onConfirm}>{confirmLabel}</Button>
         </div>
       )}
     >
-      <div className="ui-dialog-body">{body}</div>
+      <div className="grid w-full gap-4 p-4">{body}</div>
     </Overlay>
   );
 }

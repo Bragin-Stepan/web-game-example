@@ -23,6 +23,7 @@ There is no bundled example game. The template is intentionally small so a new p
 npm install
 npm run dev
 npm run validate:content
+npm run smoke:template
 npm run build
 npm run lint
 npm run audit:yandex
@@ -41,6 +42,10 @@ npm run typecheck:kit
 - WebAudio manager wrapper.
 - Input and viewport guards.
 - Small progression tree using `@core-inc/progression-tree`.
+- Commerce/purchase contract with a configurable remove-ads shop example.
+- Platform access rules for showing features such as shop only on selected platforms.
+- Reusable popup, tooltip, settings, and shop UI style.
+- Template smoke test for HUD, settings, shop, language switching, and browser purchase fallback.
 - Yandex release audit script.
 
 ## Starting A New Project
@@ -51,9 +56,18 @@ Use the generator for a standalone project:
 npm run create-game -- ../my-web-game
 ```
 
+Optional generator flags:
+
+```bash
+npm run create-game -- ../my-web-game --name "My Web Game" --product-prefix my-game --storage-prefix my-game
+```
+
 Then replace app-owned files:
 
 - `src/content/packs/default/content.json`
+- `src/config/products.ts`
+- `src/config/settings.ts`
+- `src/config/text.ts`
 - `src/game/GameStore.ts`
 - `src/game/types.ts`
 - `src/renderer/PixiApp.ts`

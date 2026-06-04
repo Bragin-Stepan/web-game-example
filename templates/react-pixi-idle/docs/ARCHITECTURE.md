@@ -18,7 +18,7 @@ Change these freely for a new game.
 
 Use these as infrastructure, not as game-code dumping grounds:
 
-- `@core-inc/yandex-game-kit`: platform lifecycle, storage, ads, WebAudio, input guards.
+- `@core-inc/yandex-game-kit`: platform lifecycle, storage, ads, commerce, WebAudio, input guards.
 - `@core-inc/progression-tree`: pan/zoom tree UI, dependency lines, editor helpers.
 
 Move code into packages only when it has no game-specific resources, entities, balance, text, or visual assumptions.
@@ -36,4 +36,3 @@ The validator checks ids, resource references, missing parents, invalid numbers,
 ```bash
 npm run validate:content
 ```
-
